@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import Login from "./pages/Login";
 import RegisterStep1 from "./pages/RegisterStep1";
 import RegisterStep2 from "./pages/RegisterStep2";
 import Home from "./pages/Home";
-import Patients from "./pages/Patients/Patients";
+import Patients from "./pages/patients";
 import Dashboard from "./pages/Dashboard";
 
 const App: React.FC = () => {
