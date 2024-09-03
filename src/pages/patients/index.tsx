@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import NavbarHome from "../components/Common/NavbarHome";
-import Sidebar from "../components/Common/Sidebar";
-import Footer from "../components/Common/Footer";
-import HeaderWithAddButton from "../components/Patients/AddButton";
-import SearchFilterArea from "../components/Patients/SearchFilter";
-import PatientList from "../components/Patients/PatientList";
-import FormularioPaciente from "../components/Patients/RegisterPatient";
-import PatientProfileMenu from "../components/Patients/PatientProfileMenu";
+
+import NavbarHome from "../../components/Common/NavbarHome";
+import Sidebar from "../../components/Common/Sidebar";
+import Footer from "../../components/Common/Footer";
+import HeaderWithAddButton from "../../components/Patients/AddButton";
+import SearchFilterArea from "../../components/Patients/SearchFilter";
+import PatientList from "../../components/Patients/PatientList";
+import FormularioPaciente from "../../components/Patients/RegisterPatient";
+import PatientProfileMenu from "../../components/Patients/PatientProfileMenu";
+
+import { getPatients } from "../../services/useFetch/patients";
 
 // Definição da interface Consulta
 interface Consulta {
@@ -30,20 +33,20 @@ const Patients: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null); // Estado para armazenar o paciente selecionado
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/patients");
-        if (!response.ok) {
-          throw new Error("Erro ao buscar pacientes");
-        }
-        const data = await response.json();
-        setPatients(data);
-      } catch (error) {
-        console.error("Erro ao buscar pacientes:", error);
+  const fetchPatients = async () => {
+    try {
+      const response = await getPatients();
+      if (!response.ok) {
+        throw new Error("Erro ao buscar pacientes");
       }
-    };
+      const data = await response.json();
+      setPatients(data);
+    } catch (error) {
+      console.error("Erro ao buscar pacientes:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchPatients();
   }, []);
 
